@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>Entrar | Minha Agenda</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+  <header class="auth-header">
+    <a href="login.html" class="brand">
+      <span class="brand-icon">M</span>
+      <span>Minha Agenda</span>
+    </a>
+    <a class="header-link" href="cadrasto.html">
+      Não tem uma conta? <strong>Cadastre-se</strong>
+    </a>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-content">
+      <div class="auth-heading">
+        <span class="eyebrow">SEU ESPAÇO DE ORGANIZAÇÃO</span>
+        <h1>Bom ter você<br>de volta.</h1>
+        <p>Entre na sua conta e continue organizando sua rotina.</p>
+      </div>
+
+      <form class="auth-form">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="voce@exemplo.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="senha">Senha</label>
+            <a href="#recuperar">Esqueceu a senha?</a>
+          </div>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" name="lembrar">
+          <span>Manter conectado</span>
+        </label>
+
+        <button type="submit" class="button button-primary">
+          Entrar na minha conta <span>→</span>
+        </button>
+      </form>
+
+      <div class="auth-divider"><span>OU</span></div>
+
+      <a href="cadrasto.html" class="button button-secondary">
+        Criar uma conta gratuita
+      </a>
+
+      <p class="auth-legal">
+        Ao continuar, você concorda com nossos
+        <a href="#termos">Termos de uso</a> e
+        <a href="#privacidade">Política de privacidade</a>.
+      </p>
+    </section>
+
+    <aside class="auth-preview">
+      <div class="preview-top">
+        <span class="preview-label">MINHA AGENDA / VISÃO GERAL</span>
+        <span class="preview-status"><i></i> Seu dia em foco</span>
+      </div>
+
+      <div class="preview-copy">
+        <span class="preview-kicker">MENOS CORRERIA, MAIS CLAREZA</span>
+        <h2>Seu tempo é valioso.<br>Use-o com intenção.</h2>
+        <p>Reúna suas tarefas, ideias e compromissos em um único lugar.</p>
+      </div>
+
+      <div class="preview-window">
+        <div class="window-header">
+          <div>
+            <span class="window-muted">SEGUNDA-FEIRA, 27 DE OUTUBRO</span>
+            <h3>Resumo do seu dia</h3>
+          </div>
+          <span class="window-avatar">F</span>
+        </div>
+
+        <div class="preview-stats">
+          <div class="preview-stat">
+            <span>Tarefas</span>
+            <strong>08</strong>
+            <small>Planejadas para hoje</small>
+          </div>
+          <div class="preview-stat">
+            <span>Concluídas</span>
+            <strong>05</strong>
+            <small>Bom progresso</small>
+          </div>
+        </div>
+
+        <div class="preview-task-title">
+          <strong>Próximas atividades</strong>
+          <span>Prévia demonstrativa</span>
+        </div>
+
+        <div class="preview-task">
+          <span class="task-check checked">✓</span>
+          <span class="task-name completed">Revisar anotações</span>
+          <span class="task-time">09:00</span>
+        </div>
+        <div class="preview-task">
+          <span class="task-check"></span>
+          <span class="task-name">Estudar matemática</span>
+          <span class="task-time">14:00</span>
+        </div>
+        <div class="preview-task">
+          <span class="task-check"></span>
+          <span class="task-name">Organizar a semana</span>
+          <span class="task-time">16:30</span>
+        </div>
+      </div>
+
+      <div class="preview-footer">
+        <span>Organização que acompanha você.</span>
+        <span>01 / 03</span>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="auth-footer">
+    <span>© 2026 Minha Agenda</span>
+    <span>Simples. Organizada. Sua.</span>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

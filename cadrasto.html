@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>Criar conta | Minha Agenda</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+  <header class="auth-header">
+    <a href="login.html" class="brand">
+      <span class="brand-icon">M</span>
+      <span>Minha Agenda</span>
+    </a>
+
+    <a class="header-link" href="login.html">
+      Já tem uma conta? <strong>Entrar</strong>
+    </a>
+  </header>
+
+  <main class="auth-main signup-main">
+    <section class="auth-content">
+      <div class="auth-heading">
+        <span class="eyebrow">COMECE POR AQUI</span>
+        <h1>Crie seu espaço.</h1>
+        <p>Uma rotina mais organizada começa com alguns passos simples.</p>
+      </div>
+
+      <form class="auth-form" id="cadastroForm">
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Como podemos chamar você?"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="voce@exemplo.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="senha">Crie uma senha</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Pelo menos 8 caracteres"
+            minlength="8"
+            autocomplete="new-password"
+            required
+          >
+          <small class="field-hint">Use uma senha forte e exclusiva.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmar-senha">Confirme sua senha</label>
+          <input
+            type="password"
+            id="confirmar-senha"
+            name="confirmar-senha"
+            placeholder="Digite a senha novamente"
+            minlength="8"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <label class="checkbox-row terms-row">
+          <input type="checkbox" name="termos" required>
+          <span>
+            Li e aceito os <a href="#termos">termos de uso</a> e a
+            <a href="#privacidade">política de privacidade</a>.
+          </span>
+        </label>
+
+        <button type="submit" class="button button-primary">
+          Criar minha conta <span>→</span>
+        </button>
+      </form>
+
+      <p class="auth-legal signup-legal">
+        Seus dados serão usados para personalizar sua experiência.
+      </p>
+    </section>
+
+    <aside class="signup-aside">
+      <div class="signup-aside-content">
+        <span class="eyebrow">UM NOVO COMEÇO</span>
+        <h2>Mais clareza para o que realmente importa.</h2>
+        <p>
+          Planeje seus dias, registre suas ideias e acompanhe seu
+          progresso no seu próprio ritmo.
+        </p>
+
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <span class="benefit-number">01</span>
+            <div>
+              <strong>Organize suas tarefas</strong>
+              <p>Tenha clareza sobre o que precisa ser feito.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <span class="benefit-number">02</span>
+            <div>
+              <strong>Guarde suas ideias</strong>
+              <p>Suas notas sempre no lugar certo.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <span class="benefit-number">03</span>
+            <div>
+              <strong>Acompanhe sua evolução</strong>
+              <p>Veja seu progresso dia após dia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span class="aside-signature">
+        MINHA AGENDA — SUA ROTINA, SUAS REGRAS.
+      </span>
+    </aside>
+  </main>
+
+  <footer class="auth-footer">
+    <span>© 2026 Minha Agenda</span>
+    <span>Simples. Organizada. Sua.</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="cadastro.js"></script>
+</body>
+</html>

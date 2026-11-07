@@ -1,0 +1,762 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f6f8">
+
+  <title>Minha Agenda | Dashboard</title>
+
+  <link rel="stylesheet" href="agenda.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="supabase-config.js" defer></script>
+<script src="auth-guard.js" defer></script><body>
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar" id="sidebar">
+
+    <a href="agenda1.html" class="brand">
+      <span class="brand-icon">M</span>
+      <span>
+        Minha Agenda
+        <small>ORGANIZE SUA ROTINA</small>
+      </span>
+    </a>
+
+    <p class="nav-label">MENU PRINCIPAL</p>
+
+    <nav class="navigation">
+
+      <a class="nav-item active" href="#inicio">
+        <img class="nav-icon" src="inicio.png" alt="">
+        <span>Início</span>
+      </a>
+
+      <a class="nav-item" href="#tarefas">
+        <img class="nav-icon" src="images.png" alt="">
+        <span>Calendário</span>
+      </a>
+
+      <a class="nav-item" href="#notas">
+      <img class="nav-icon" src="notas.png" alt="">
+        <span>Notas rapidas</span>
+
+      <a class="nav-item" href="#calendario">
+        <img class="nav-icon" src="calendario.png" alt="">
+        <span>Calendário</span>
+      </a>
+
+      <p class="nav-label">PREFERÊNCIAS</p>
+
+      <a
+        class="nav-item"
+        href="#pagina-configuracoes"
+        data-page="configuracoes"
+      >
+        <img class="nav-icon" src="confi.png" alt="">
+        <span>Configurações</span>
+      </a>
+
+
+    </nav>
+
+    <!-- PERFIL -->
+    <div class="sidebar-bottom">
+
+      <div class="help-card">
+        <strong>Um passo de cada vez.</strong>
+        <p>Organize seu dia e acompanhe seu progresso.</p>
+      </div>
+
+<div class="profile">
+
+  
+<div
+    class="avatar"
+    id="profileAvatar"
+    role="button"
+    tabindex="0"
+    title="Alterar foto de perfil"
+    aria-label="Alterar foto de perfil"
+>
+    <span id="avatarInitial">U</span>
+
+    <img
+        id="profileAvatarImage"
+        alt="Foto de perfil"
+        hidden
+    >
+
+    <input
+        type="file"
+        id="avatarFileInput"
+        accept="image/jpeg,image/png,image/webp"
+        hidden
+    >
+</div>
+
+
+    <div class="profile-info">
+        <strong id="profileName">Usuário</strong>
+        <small>Minha conta</small>
+    </div>
+
+    <button
+        id="logoutButton"
+        class="logout-button"
+        type="button"
+        title="Voltar ao login"
+        aria-label="Voltar ao login"
+    >
+        ↗
+    </button>
+
+</div>
+
+
+    </div>
+
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="main-content" id="inicio">
+
+    <!-- CABEÇALHO -->
+    <header class="topbar">
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-label="Abrir menu"
+      >
+        ☰
+      </button>
+
+      <div class="topbar-actions">
+
+        <span class="today-label" id="todayLabel"></span>
+
+        <button
+          class="theme-button"
+          id="themeToggle"
+          type="button"
+          aria-label="Alternar tema"
+        >
+          ☾
+        </button>
+
+      </div>
+
+    </header>
+
+    <!-- PÁGINA INICIAL -->
+    <div id="pagina-inicial">
+
+      <!-- BOAS-VINDAS -->
+      <section class="welcome-section">
+
+        <div>
+          <p class="eyebrow">SEU ESPAÇO DE ORGANIZAÇÃO</p>
+
+          <h1 id="welcomeTitle">Bom dia!</h1>
+
+          <p class="welcome-description">
+            Organize suas prioridades e aproveite melhor o seu dia.
+          </p>
+        </div>
+
+        <button
+          class="primary-button"
+          id="newTaskTop"
+          type="button"
+        >
+          <span>＋</span> Nova tarefa
+        </button>
+
+      </section>
+
+      <!-- ESTATÍSTICAS -->
+      <section class="stats-grid" aria-label="Resumo das tarefas">
+
+        <article class="stat-card">
+
+          <div class="stat-heading">
+            <span>Tarefas de hoje</span>
+            <img class="stat-icon" src="tarefa.jpg" alt="Tarefas">
+          </div>
+
+          <strong class="stat-number" id="totalTasks">0</strong>
+
+          <p>Total de tarefas cadastradas</p>
+
+        </article>
+
+        <article class="stat-card">
+
+          <div class="stat-heading">
+            <span>Concluídas</span>
+            <img class="stat-icon" src="conclusão.png" alt="Tarefas concluídas">
+          </div>
+
+          <strong class="stat-number" id="completedTasks">0</strong>
+
+          <p>Tarefas finalizadas</p>
+
+        </article>
+
+        <article class="stat-card">
+
+          <div class="stat-heading">
+            <span>Pendentes</span>
+            <img class="stat-icon" src="pendentes.png" alt="Tarefas pendentes">
+          </div>
+
+          <strong class="stat-number" id="pendingTasks">0</strong>
+
+          <p>Aguardando conclusão</p>
+
+        </article>
+
+        <article class="stat-card">
+
+          <div class="stat-heading">
+            <span>Progresso diário</span>
+            <img class="stat-icon" src="progresso.jpg" alt="Progresso diário">
+          </div>
+
+          <strong class="stat-number" id="progressNumber">0%</strong>
+
+          <p>Do total de tarefas concluídas</p>
+
+        </article>
+
+      </section>
+
+      <!-- TAREFAS E PROGRESSO -->
+      <section class="content-grid">
+
+        <article class="panel tasks-panel" id="tarefas">
+
+          <div class="panel-header">
+
+            <div>
+              <h2>Minhas tarefas</h2>
+              <p>Gerencie suas prioridades.</p>
+            </div>
+
+            <select id="taskFilter" aria-label="Filtrar tarefas">
+              <option value="all">Todas</option>
+              <option value="pending">Pendentes</option>
+              <option value="completed">Concluídas</option>
+            </select>
+
+          </div>
+
+          <!-- FORMULÁRIO DE TAREFAS -->
+          <form class="task-form" id="taskForm">
+
+            <input
+              id="taskInput"
+              type="text"
+              placeholder="O que você precisa fazer?"
+              maxlength="120"
+              required
+            >
+
+            <input
+              id="taskDate"
+              type="date"
+              aria-label="Data da tarefa"
+              required
+            >
+
+            <input
+              id="taskTime"
+              type="time"
+              aria-label="Horário da tarefa"
+            >
+
+            <select id="taskPriority" aria-label="Prioridade">
+              <option value="normal">Normal</option>
+              <option value="high">Alta</option>
+              <option value="low">Baixa</option>
+            </select>
+
+            <button type="submit" class="primary-button">
+              Adicionar
+            </button>
+
+          </form>
+
+          <div class="task-list" id="taskList"></div>
+
+          <p class="empty-message" id="taskEmpty">
+            Nenhuma tarefa por aqui. Adicione sua primeira tarefa.
+          </p>
+
+        </article>
+
+        <!-- PROGRESSO -->
+        <article class="panel progress-panel">
+
+          <div class="panel-header">
+
+            <div>
+              <h2>Seu progresso</h2>
+              <p>Como está seu dia?</p>
+            </div>
+
+          </div>
+
+          <div class="progress-circle" id="progressCircle">
+
+            <div>
+              <strong id="circleNumber">0%</strong>
+              <span>concluído</span>
+            </div>
+
+          </div>
+
+          <p class="progress-caption" id="progressCaption">
+            Você ainda não concluiu tarefas.
+          </p>
+
+          <div class="progress-legend">
+
+            <div>
+              <span class="legend-dot blue-dot"></span>
+              Total de tarefas
+              <strong id="legendTotal">0</strong>
+            </div>
+
+            <div>
+              <span class="legend-dot green-dot"></span>
+              Concluídas
+              <strong id="legendCompleted">0</strong>
+            </div>
+
+            <div>
+              <span class="legend-dot orange-dot"></span>
+              Pendentes
+              <strong id="legendPending">0</strong>
+            </div>
+
+          </div>
+
+        </article>
+
+      </section>
+
+      <!-- NOTAS -->
+      <section class="panel notes-panel" id="notas">
+
+        <div class="panel-header">
+
+          <div>
+            <h2>Notas rápidas</h2>
+            <p>
+              Registre ideias, lembretes e informações importantes.
+            </p>
+          </div>
+
+          <span class="notes-icon">✎</span>
+
+        </div>
+
+        <textarea
+          id="notesInput"
+          rows="4"
+          maxlength="5000"
+          placeholder="Escreva suas anotações aqui..."
+        ></textarea>
+
+        <div class="notes-footer">
+
+          <span id="notesStatus" role="status">
+            Suas notas ficam salvas neste navegador.
+          </span>
+
+          <button
+            class="secondary-button"
+            id="saveNotes"
+            type="button"
+          >
+            Salvar notas
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- PÁGINA DO CALENDÁRIO -->
+    <section
+      class="calendar-page"
+      id="pagina-calendario"
+      hidden
+    >
+
+      <div class="settings-page-header">
+
+        <div>
+          <p class="eyebrow">ORGANIZE SEUS COMPROMISSOS</p>
+          <h1>Calendário</h1>
+          <p>Visualize suas tarefas e organize seus dias.</p>
+        </div>
+
+      </div>
+
+      <div class="calendar-layout">
+
+        <article class="panel calendar-panel">
+
+          <div class="calendar-header">
+
+            <div>
+              <h2 id="calendarMonth">Mês</h2>
+              <p id="calendarYear">Ano</p>
+            </div>
+
+            <div class="calendar-navigation">
+
+              <button
+                type="button"
+                id="previousMonth"
+                aria-label="Mês anterior"
+              >
+                ‹
+              </button>
+
+              <button
+                type="button"
+                id="todayButton"
+              >
+                Hoje
+              </button>
+
+              <button
+                type="button"
+                id="nextMonth"
+                aria-label="Próximo mês"
+              >
+                ›
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="calendar-weekdays">
+            <span>Dom</span>
+            <span>Seg</span>
+            <span>Ter</span>
+            <span>Qua</span>
+            <span>Qui</span>
+            <span>Sex</span>
+            <span>Sáb</span>
+          </div>
+
+          <div
+            class="calendar-days"
+            id="calendarDays"
+          ></div>
+
+          <div class="calendar-legend">
+            <span class="calendar-day-indicator"></span>
+            Dia com tarefas
+          </div>
+
+        </article>
+
+        <article class="panel calendar-task-panel">
+
+          <div class="panel-header">
+
+            <div>
+              <h2 id="selectedDateTitle">Tarefas do dia</h2>
+              <p id="selectedDateDescription">
+                Selecione uma data no calendário.
+              </p>
+            </div>
+
+          </div>
+
+          <div
+            class="calendar-task-list"
+            id="calendarTaskList"
+          ></div>
+
+          <p
+            class="empty-message"
+            id="calendarTaskEmpty"
+          >
+            Nenhuma tarefa cadastrada para esta data.
+          </p>
+
+          <button
+            type="button"
+            class="primary-button calendar-add-button"
+            id="addTaskFromCalendar"
+          >
+            ＋ Adicionar tarefa nesta data
+          </button>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- PÁGINA DE CONFIGURAÇÕES -->
+    <section
+      class="settings-page"
+      id="pagina-configuracoes"
+      hidden
+    >
+
+      <div class="settings-page-header">
+
+        <div>
+          <p class="eyebrow">PERSONALIZE SUA EXPERIÊNCIA</p>
+          <h1>Configurações</h1>
+          <p>Gerencie sua conta, aparência e notificações.</p>
+        </div>
+
+      </div>
+
+      <div class="settings-layout">
+
+        <!-- CONTA -->
+        <article class="panel settings-card">
+
+          <div class="settings-card-heading">
+
+            <span class="settings-card-icon">👤</span>
+
+            <div>
+              <h2>Minha conta</h2>
+              <p>Informações da conta conectada.</p>
+            </div>
+
+          </div>
+
+          <div class="settings-info">
+
+            <div>
+              <small>Nome</small>
+              <strong id="settingsName">Usuário</strong>
+            </div>
+
+            <div>
+              <small>E-mail</small>
+              <strong id="settingsEmail">email@exemplo.com</strong>
+            </div>
+
+          </div>
+
+        </article>
+
+        <!-- APARÊNCIA -->
+        <article class="panel settings-card">
+
+          <div class="settings-card-heading">
+
+            <span class="settings-card-icon">◐</span>
+
+            <div>
+              <h2>Aparência</h2>
+              <p>Personalize a aparência da sua agenda.</p>
+            </div>
+
+          </div>
+
+          <div class="settings-option">
+
+            <div>
+              <strong>Tema escuro</strong>
+              <small>Alterne entre o tema claro e escuro.</small>
+            </div>
+
+            <label class="settings-switch">
+
+              <input type="checkbox" id="settingsTheme">
+
+              <span class="settings-slider"></span>
+
+            </label>
+
+          </div>
+
+        </article>
+
+        <!-- NOTIFICAÇÕES -->
+        <article class="panel settings-card">
+
+          <div class="settings-card-heading">
+
+            <img class="settings-card-icon" src="notificação.png" alt="">
+
+            <div>
+              <h2>Notificações</h2>
+              <p>Receba lembretes sobre suas tarefas.</p>
+            </div>
+
+          </div>
+
+          <div class="settings-option">
+
+            <div>
+              <strong>Notificações do navegador</strong>
+              <small>Mostrar avisos nos horários das tarefas.</small>
+            </div>
+
+            <label class="settings-switch">
+
+              <input
+                type="checkbox"
+                id="settingsNotifications"
+              >
+
+              <span class="settings-slider"></span>
+
+            </label>
+
+          </div>
+
+          <p
+            id="notificationStatus"
+            class="settings-feedback"
+            role="status"
+          >
+            Configure suas notificações.
+          </p>
+
+        </article>
+
+        <!-- WHATSAPP -->
+        <article class="panel settings-card">
+
+          <div class="settings-card-heading">
+
+            <img class="settings-card-icon" src="zap.png" alt="">
+
+            <div>
+              <h2>WhatsApp</h2>
+              <p>Configure o número para seus lembretes.</p>
+            </div>
+
+          </div>
+
+          <div class="whatsapp-settings">
+
+            <label for="whatsappNumber">
+              Número de WhatsApp
+            </label>
+
+            <input
+              type="tel"
+              id="whatsappNumber"
+              placeholder="+55 (35) 99999-9999"
+              autocomplete="tel"
+              maxlength="20"
+            >
+
+            <small>
+              Informe o código do país, DDD e número.
+              Exemplo: +55 35 99999-9999.
+            </small>
+
+            <button
+              type="button"
+              class="primary-button"
+              id="saveWhatsApp"
+            >
+              Salvar número
+            </button>
+
+            <p
+              id="whatsappStatus"
+              class="settings-feedback"
+              role="status"
+            >
+              Nenhum número configurado.
+            </p>
+
+          </div>
+
+          <div class="whatsapp-information">
+            Os lembretes serão preparados para envio pelo WhatsApp.
+            O envio pelo link gratuito exige confirmação do usuário.
+          </div>
+
+        </article>
+
+        <!-- PRIVACIDADE -->
+        <article class="panel settings-card">
+
+          <div class="settings-card-heading">
+
+            <a class="nav-item active" href="#inicio">
+  <img src="privacidade.jpg" alt="">
+  
+</a>
+
+            <div>
+              <h2>Privacidade</h2>
+              <p>Seus dados e suas informações.</p>
+            </div>
+
+          </div>
+
+          <p class="settings-description">
+            Suas tarefas, notas, tema e preferências são armazenados
+            separadamente por conta neste navegador.
+          </p>
+
+        </article>
+
+        <!-- SESSÃO -->
+        <article class="panel settings-card">
+
+          <div class="settings-card-heading">
+
+            <img class="settings-card-icon" src="sair.png" alt="">
+
+            <div>
+              <h2>Sessão</h2>
+              <p>Gerencie seu acesso à Minha Agenda.</p>
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="secondary-button"
+            id="settingsLogout"
+          >
+            Sair da conta
+          </button>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer class="footer">
+      <span>Minha Agenda</span>
+      <span>Organização simples, rotina mais leve.</span>
+    </footer>
+
+  </main>
+
+  <!-- SOBREPOSIÇÃO DO MENU MOBILE -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+</body>
+</html>
